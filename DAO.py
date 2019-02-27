@@ -4,17 +4,25 @@ import datetime
 
 Client = MongoClient()
 db = Client['Book']
-collection = db['book_repository']
 
 def create_collection():
     jsonfile = open('MOCK_DATA.json','r')
     DML = json.load(jsonfile)
+    collection = db['book_repository']
     collection.insert_many(DML)
 
-def select_data():
-    result=collection.find({'genre':'Comedy'}).limit(10)
+def create_user_collection():
+    jsonfile=open('UserInformation.json','r')
+    DML=json.load(jsonfile)
+    collection=db['User']
+    collection.insert_many(DML)
+
+def select_data(genre):
+    result=collection.find({'genre':genre}).limit(10)
     for data in result:
         print(data)
 
-select_data()
 
+create_user_collection()
+
+# select_data('Comedy')
