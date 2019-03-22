@@ -1,0 +1,14 @@
+<form>
+  <h1>LisMoi</h1>
+  <div class="input">
+    <label>Username</label>
+    <input type="text" name="username" [(ngModel)]="username">
+  </div>
+  <div class="input">
+    <label>Password </label>
+    <input type="password" name="password" [(ngModel)]="password">
+  </div>
+  <a routerLink="home"><div class = "input">
+      <input type ="submit" value="login" (click)="LoginUser()" [routerLink]>
+  </div></a>
+</form>
