@@ -1,0 +1,1 @@
+https://data.seattle.gov/api/views/tmmm-ytt6/rows.csv?accessType=DOWNLOAD&bom=true&format=true&delimiter=%3B

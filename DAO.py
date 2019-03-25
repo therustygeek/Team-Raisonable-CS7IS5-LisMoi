@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-import json
+import json , csv
 import datetime
 
 Client = MongoClient()
@@ -10,6 +10,24 @@ def create_collection():
     DML = json.load(jsonfile)
     collection = db['book_repository']
     collection.insert_many(DML)
+
+def create_csvcollection():
+        with open('Checkouts.csv','r', encoding='utf-8') as csvfile:
+                csv_reader = csv.reader(csvfile,delimiter=';')
+                i = 0
+                header = ['UsageClass','CheckoutType','MaterialType','CheckoutYear','CheckoutMonth','Checkouts','Title','Creator','Subjects','Publisher','PublicationYear']
+                for line in csv_reader:
+                        if ( i < 1000 ):
+                                object = {}
+                                for count ,topic in enumerate(header):
+                                        if(count == 0):
+                                                object['_id'] = i
+                                                i = i + 1
+                                        if(count != 0):
+                                                object[topic] = line[count]
+                                collection = db['book_checkouts']
+                                collection.insert_one(object)
+        
 
 def create_user_collection():
     jsonfile=open('UserInformation.json','r')
@@ -59,6 +77,7 @@ def remove_book(UserId, BookId):
         collection.update_one({'_id':UserId}, {'$pull': {'BookList': {'$in': BookId }}})
 
 #Tests
+#create_csvcollection()
 #add_bookToList(1,[1,2,3,4,5])
 #remove_book(1,[2,3])
 #print(get_Mood(1))
